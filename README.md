@@ -54,6 +54,34 @@ The **Userfields** plugin for Cotonti CMS allows creating and managing custom us
    - `userfields.users.loop.php` (displays fields in user lists).
    - `userfields.usertags.php` (integrates with `usertags` for global use).
 
+
+## Plugin Files and Structure
+
+```
+/userfields/
+└── inc/
+    ├── userfields.functions.php         # Core functions
+├── lang/
+│   ├── userfields.ru.lang.php           # Russian localization
+│   ├── userfields.en.lang.php           # English localization
+├── setup/
+│   ├── userfields.install.sql           # SQL for creating tables
+│   └── userfields.uninstall.sql         # SQL for dropping tables
+├── tpl/
+│   ├── userfields.admin.tpl             # Template for creating and managing fields in the plugin's admin panel
+├── userfields.admin.php                 # Main logic for managing fields in the admin panel
+├── userfields.global.php                # Global inclusion of language files
+├── userfields.setup.php                 # Plugin configuration and setup
+├── userfields.users.details.tags.php    # Outputs fields and tags for the public profile page in the users.details.tpl template
+├── userfields.users.edit.tags.php       # Outputs fields and tags for the admin profile editing page in the users.edit.tpl template
+├── userfields.users.edit.update.done.php # Hooks into the update process and saves profile settings modified by an administrator
+├── userfields.users.loop.php            # Outputs fields in the user list in users.tpl within <!-- BEGIN: USERS_ROW --> and <!-- END: USERS_ROW -->
+├── userfields.users.profile.tags.php     # Outputs fields and tags for the user profile editing page in the users.profile.tpl template
+├── userfields.users.profile.update.done.php # Hooks into the update process and saves profile settings modified by a user
+├── userfields.usertags.php              # Tags for integration using cot_generate_usertags($data, 'PREFIX_')
+```
+
+
 4. **Uninstallation**:
    - In admin panel: **Administration > Extensions > Userfields > Uninstall**.
    - Executes `userfields.uninstall.sql`, removing tables.
@@ -319,7 +347,31 @@ BSD License. Copyright (c) webitproff 2025.
      - `userfields.users.edit.update.done.php` (сохранение в админке).
      - `userfields.users.loop.php` (вывод в списке пользователей).
      - `userfields.usertags.php` (интеграция с `usertags`).
-	 
+
+6. **Список файлов плагина и его структура:**
+```
+/userfields/
+└── inc/
+    ├── userfields.functions.php         # Основные функции 
+├── lang/
+│   ├── userfields.ru.lang.php           # Русская локализация
+│   └── userfields.en.lang.php           # Английская локализация
+├── setup/
+│   ├── userfields.install.sql           # SQL для создания таблиц
+│   └── userfields.uninstall.sql         # SQL для удаления таблиц
+├── tpl/
+│   ├── userfields.admin.tpl                   # Шаблон создания и управления полями в админке плагина
+├── userfields.admin.php                       # Основная логика управления полями в админке
+├── userfields.global.php                      # Подключение языковых файлов глобально
+├── userfields.setup.php                       # Конфигурация и настройка плагина
+├── userfields.users.details.tags.php          # выводим поля и теги для страницы публичного профиля в шаблоне users.details.tpl
+├── userfields.users.edit.tags.php             # выводим поля и теги для страницы редактирования профиля админом в шаблоне users.edit.tpl
+├── userfields.users.edit.update.done.php          # цепляемся за хук и выполняем сохранение настроек профиля, внесенных администратором
+├── userfields.users.loop.php                   #  выводим поля в списке пользователей в users.tpl внутри <!-- BEGIN: USERS_ROW --> и <!-- END: USERS_ROW -->
+├── userfields.users.profile.tags.php          # выводим поля и теги для страницы редактирования профиля пользователем в шаблоне users.profile.tpl 
+├── userfields.users.profile.update.done.php     # цепляемся за хук и выполняем сохранение настроек профиля, внесенных пользователем
+├── userfields.usertags.php                     # Теги для интеграции по типу cot_generate_usertags($data, 'PREFIX_')
+```
 	 
 ## Управление полями в админ-панели
 
