@@ -1,25 +1,25 @@
 # Userfields Plugin for Cotonti 0.9.26
 
 ## Overview
----
 
-# 🇬🇧  English
+### 🇬🇧 English
 
-The **Userfields** plugin for Cotonti CMS allows creating and managing custom user fields (e.g., phone number, company name, address) without modifying the `cot_users` table. It uses dedicated tables `cot_userfield_types` (field types) and `cot_userfield_values` (field values), offloading `cot_users` for scalability and ease of use. Fields integrate into user profiles, the admin panel, and are displayed in templates (user lists, articles, forums, mstore module).
+The **Userfields** plugin for Cotonti CMS enables the creation and management of custom user fields (e.g., phone number, company name, address) without modifying the `cot_users` table. It uses dedicated tables `cot_userfield_types` (field types) and `cot_userfield_values` (field values) for scalability and ease of use. Fields seamlessly integrate into user profiles, admin panels, and templates across various modules (user lists, articles, forums, Multistore module).
 
-<img src="https://raw.githubusercontent.com/webitproff/cot-userfields/refs/heads/main/User-fields-Plugin-for-Cotonti_3.webp" alt="Custom Userfields Plugin for on Cotonti CMF" title="Custom Userfields Plugin for on Cotonti CMF" />
+![Custom Userfields Plugin for Cotonti CMF](https://raw.githubusercontent.com/webitproff/cot-userfields/main/User-fields-Plugin-for-Cotonti_3.webp)
 
-### Key Features
+#### Key Features
 - Create, edit, and delete field types with unique codes, titles, and sort orders via the admin panel.
-- Store values in a separate table linked to user IDs.
+- Store field values in a separate table linked to user IDs.
 - Edit fields in user profiles (`users.profile.tpl`) and admin user editor (`users.edit.tpl`).
-- Display fields in user lists (`users.tpl`), profile pages (`users.details.tpl`), and other templates via Cotonti tags.
-- Automatically save values when updating profiles or user data.
+- Display fields in user lists (`users.tpl`), profile pages (`users.details.tpl`), and other templates (e.g., `page.tpl`, `mstore.tpl`, `forums.posts.tpl`) using Cotonti tags.
+- Support for individual field tags (e.g., `{USERFIELDS_CELL_NUMBER}`), a loop for all fields (`<!-- BEGIN: USERFIELDS -->`), and an HTML block (`{USERFIELDS_ROWS_HTML}` or `{USERS_ROW_FIELD_ROWS_HTML}`).
+- Automatically save field values during profile or user data updates.
 - Sort fields by `order_num` parameter.
-- Include test fields (`cell_number`, `company_name`) for quick setup.
-- Convenient admin panel for field management.
+- Includes test fields (`cell_number`, `company_name`) for quick setup.
+- User-friendly admin panel for field management.
 
-## Requirements
+### Requirements
 - Cotonti CMS 0.9.26 or higher.
 - PHP 8.4 or higher.
 - Active `users` module.
@@ -29,7 +29,7 @@ The **Userfields** plugin for Cotonti CMS allows creating and managing custom us
 
 1. **Prepare Files**:
    - Download the source code from the [GitHub repository](https://github.com/webitproff/cot-userfields).
-   - Extract the contents of `cot-userfields-main.zip` and upload the `userfields` folder to the `plugins` directory in your Cotonti root.
+   - Extract `cot-userfields-main.zip` and upload the `userfields` folder to the `plugins` directory in your Cotonti root.
 
 2. **Install via Admin Panel**:
    - Log into the Cotonti admin panel (`/admin.php`).
@@ -45,6 +45,7 @@ The **Userfields** plugin for Cotonti CMS allows creating and managing custom us
    - `userfields.admin.php` (admin panel logic).
    - `userfields.admin.tpl` (admin panel template).
    - `userfields.ru.lang.php` (Russian localization).
+   - `userfields.en.lang.php` (English localization).
    - `userfields.functions.php` (core functions).
    - `userfields.users.details.tags.php` (tags for user details page).
    - `userfields.users.profile.tags.php` (tags for profile editing).
@@ -54,13 +55,12 @@ The **Userfields** plugin for Cotonti CMS allows creating and managing custom us
    - `userfields.users.loop.php` (displays fields in user lists).
    - `userfields.usertags.php` (integrates with `usertags` for global use).
 
-
-## Plugin Files and Structure
+### Plugin Files and Structure
 
 ```
 /userfields/
-└── inc/
-    ├── userfields.functions.php         # Core functions
+├── inc/
+│   └── userfields.functions.php         # Core functions
 ├── lang/
 │   ├── userfields.ru.lang.php           # Russian localization
 │   ├── userfields.en.lang.php           # English localization
@@ -68,19 +68,18 @@ The **Userfields** plugin for Cotonti CMS allows creating and managing custom us
 │   ├── userfields.install.sql           # SQL for creating tables
 │   └── userfields.uninstall.sql         # SQL for dropping tables
 ├── tpl/
-│   ├── userfields.admin.tpl             # Template for creating and managing fields in the plugin's admin panel
-├── userfields.admin.php                 # Main logic for managing fields in the admin panel
+│   └── userfields.admin.tpl             # Template for creating and managing fields
+├── userfields.admin.php                 # Logic for managing fields
 ├── userfields.global.php                # Global inclusion of language files
 ├── userfields.setup.php                 # Plugin configuration and setup
-├── userfields.users.details.tags.php    # Outputs fields and tags for the public profile page in the users.details.tpl template
-├── userfields.users.edit.tags.php       # Outputs fields and tags for the admin profile editing page in the users.edit.tpl template
-├── userfields.users.edit.update.done.php # Hooks into the update process and saves profile settings modified by an administrator
-├── userfields.users.loop.php            # Outputs fields in the user list in users.tpl within <!-- BEGIN: USERS_ROW --> and <!-- END: USERS_ROW -->
-├── userfields.users.profile.tags.php     # Outputs fields and tags for the user profile editing page in the users.profile.tpl template
-├── userfields.users.profile.update.done.php # Hooks into the update process and saves profile settings modified by a user
-├── userfields.usertags.php              # Tags for integration using cot_generate_usertags($data, 'PREFIX_')
+├── userfields.users.details.tags.php    # Outputs fields and tags for public profile page
+├── userfields.users.edit.tags.php       # Outputs fields and tags for admin profile editing
+├── userfields.users.edit.update.done.php # Handles profile updates by administrators
+├── userfields.users.loop.php            # Outputs fields in user list
+├── userfields.users.profile.tags.php     # Outputs fields and tags for user profile editing
+├── userfields.users.profile.update.done.php # Handles profile updates by users
+└── userfields.usertags.php              # Tags for integration using cot_generate_usertags
 ```
-
 
 4. **Uninstallation**:
    - In admin panel: **Administration > Extensions > Userfields > Uninstall**.
@@ -88,8 +87,8 @@ The **Userfields** plugin for Cotonti CMS allows creating and managing custom us
    - Manually delete the `plugins/userfields` folder.
 
 5. **Troubleshooting**:
-   - **Plugin Not Visible**: Check that files are in `plugins/userfields`.
-   - **Database Issues**: Ensure the MySQL user has permissions for table creation and foreign keys.
+   - **Plugin Not Visible**: Ensure files are in `plugins/userfields`.
+   - **Database Issues**: Verify MySQL user permissions for table creation and foreign keys.
 
 ## Managing Fields in Admin Panel
 
@@ -130,143 +129,374 @@ Access the admin panel at **Administration > Other > Userfields** (requires admi
 
 ## Template Integration
 
-The plugin provides tags for the `users` module and via `cot_generate_usertags` for other modules (`mstore`, `page`, `forums`). Tags use the field code in uppercase (e.g., `cell_number` → `USERFIELDS_CELL_NUMBER`). All tags are wrapped in `<!-- IF {PHP|cot_plugin_active('userfields')} -->`.
+The plugin provides tags for the `users` module and via `cot_generate_usertags` for other modules (`mstore`, `page`, `forums`). Tags use the field code in uppercase (e.g., `cell_number` → `USERFIELDS_CELL_NUMBER`). All tags are wrapped in `<!-- IF {PHP|cot_plugin_active('userfields')} -->` to ensure compatibility.
 
 ### 1. Users Module Templates
 
-- **users.profile.tpl (Profile Editing)**:
-  - Inside `<form>` (e.g., after `{USERS_PROFILE_COUNTRY}`), add:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="userfields-block">
-        {USERFIELDS_FORM}
-    </div>
-    <!-- ENDIF -->
-    ```
+#### users.profile.tpl (Profile Editing)
 
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="userfields-block">
-        {USERFIELDS_FORM}
-    </div>
-    <!-- ENDIF -->
-    ```
+**Using a Loop (Automatic Output of All Fields)**:
+- Inside `<form>` (e.g., after `{USERS_PROFILE_COUNTRY}`), add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="userfields-block">
+      <!-- BEGIN: USERFIELDS -->
+      <div>
+          <label>{USERFIELDS_FIELD_TITLE}</label>
+          {USERFIELDS_FIELD}
+      </div>
+      <!-- END: USERFIELDS -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs all fields automatically as a loop with title and input.
 
-  - Outputs a table with field titles and input fields.
+**Individual Fields (Custom Styling)**:
+- Inside `<form>` (e.g., after `{USERS_PROFILE_COUNTRY}`), add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <label class="userfield-title text-primary">{USERFIELDS_CELL_NUMBER_TITLE}:</label>
+          <div class="userfield-value">{USERFIELDS_CELL_NUMBER}</div>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield text-danger">
+          <label class="userfield-title">{USERFIELDS_COMPANY_NAME_TITLE}:</label>
+          <div class="userfield-value">{USERFIELDS_COMPANY_NAME}</div>
+      </div>
+      <!-- ENDIF -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs specific fields with custom styling for each.
 
-- **users.edit.tpl (Admin User Editing)**:
-  - Inside `<form>` (e.g., after `{USERS_EDIT_COUNTRY}`), add:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="userfields-block">
-        {USERFIELDS_FORM}
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Outputs a table, similar to profile.
+#### users.edit.tpl (Admin User Editing)
 
-- **users.details.tpl (User Profile Page)**:
-  - After `{USERS_DETAILS_COUNTRY_FLAG} {USERS_DETAILS_COUNTRY}`, add:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="userfields-details">
-        <h3>Additional Fields</h3>
-        {USERFIELDS_FIELDS}
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Outputs a `<dl>` list: `<dt>Title</dt> <dd>Value</dd>` (only filled fields).
+**Using a Loop (Automatic Output of All Fields)**:
+- Inside `<form>` (e.g., after `{USERS_EDIT_COUNTRY}`), add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="userfields-block">
+      <!-- BEGIN: USERFIELDS -->
+      <div>
+          <label>{USERFIELDS_FIELD_TITLE}</label>
+          {USERFIELDS_FIELD}
+      </div>
+      <!-- END: USERFIELDS -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs all fields automatically as a loop with title and input.
 
-- **users.tpl (User List)**:
-  - Inside `<!-- BEGIN: USERS_ROW -->` (after `{USERS_ROW_NAME}`), add:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="user-fields">
-        {USERS_ROW_FIELD_ROWS_HTML}
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Outputs a `<div>` list with titles and values.
+**Individual Fields (Custom Styling)**:
+- Inside `<form>` (e.g., after `{USERS_EDIT_COUNTRY}`), add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <label class="userfield-title text-primary">{USERFIELDS_CELL_NUMBER_TITLE}:</label>
+          <div class="userfield-value">{USERFIELDS_CELL_NUMBER}</div>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield text-danger">
+          <label class="userfield-title">{USERFIELDS_COMPANY_NAME_TITLE}:</label>
+          <div class="userfield-value">{USERFIELDS_COMPANY_NAME}</div>
+      </div>
+      <!-- ENDIF -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs specific fields with custom styling for each.
+
+#### users.details.tpl (User Profile Page)
+
+**Using a Loop (Automatic Output of All Fields)**:
+- After `{USERS_DETAILS_COUNTRY_FLAG} {USERS_DETAILS_COUNTRY}`, add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="userfields-details">
+      <h3>Additional Fields</h3>
+      <!-- BEGIN: USERFIELDS_DETAILS -->
+      <div class="userfield">
+          <label class="userfield-title text-success">{USERFIELDS_FIELD_TITLE}:</label>
+          <div class="userfield-value">{USERFIELDS_FIELD}</div>
+      </div>
+      <!-- END: USERFIELDS_DETAILS -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs all fields automatically as a loop with title and value.
+
+**Individual Fields (Custom Styling)**:
+- After `{USERS_DETAILS_COUNTRY_FLAG} {USERS_DETAILS_COUNTRY}`, add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{USERFIELDS_CELL_NUMBER}" class="fw-semibold">{USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs specific fields with custom styling, e.g., a clickable phone number.
+
+#### users.tpl (User List)
+
+**Using a Loop (Automatic Output of All Fields)**:
+- Inside `<!-- BEGIN: USERS_ROW -->` (e.g., after `{USERS_ROW_NAME}`), add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="user-fields">
+      <!-- BEGIN: USERFIELDS -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_FIELD_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_FIELD}</span>
+      </div>
+      <!-- END: USERFIELDS -->
+      <hr>
+      {USERS_ROW_FIELD_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs all fields automatically as a loop with title and value, plus a pre-formatted HTML block.
+
+**Individual Fields (Custom Styling)**:
+- Inside `<!-- BEGIN: USERS_ROW -->` (e.g., after `{USERS_ROW_NAME}`), add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="user-fields">
+      <!-- IF {USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{USERFIELDS_CELL_NUMBER}" class="fw-semibold">{USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+      <hr>
+      {USERS_ROW_FIELD_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs specific fields with custom styling, plus a pre-formatted HTML block.
 
 ### 2. Other Modules (via usertags)
-Follow existing examples of `cot_generate_usertags($data, 'PREFIX_')` in the Cotonti core to create tags like `{PREFIX_USERFIELDS_CODE}` and `{PREFIX_USERFIELDS_CODE_TITLE}`, where `PREFIX_` is the template-specific prefix.
 
-For example:
-- `LIST_ROW_OWNER_` for page lists (see `page.list.php`: `$t->assign(cot_generate_usertags($pag, 'LIST_ROW_OWNER_'));`).
-- `PAGE_OWNER_` for full pages (see `page.main.php`: `$t->assign(cot_generate_usertags($pag, 'PAGE_OWNER_'));`).
+The plugin supports integration with other modules using `cot_generate_usertags($data, 'PREFIX_')`, enabling tags like `{PREFIX_USERFIELDS_CODE}`, `{PREFIX_USERFIELDS_CODE_TITLE}`, and `{PREFIX_USERFIELDS_ROWS_HTML}`.
 
-Example for the [Multistore module](https://github.com/webitproff/cot-multistore):
+#### page.tpl (Article Page)
 
-- **mstore.index.tpl / mstore.list.tpl (Product Lists)**:
-  - Inside `<!-- BEGIN: MSTORE_ROW -->` or `<!-- BEGIN: LIST_ROW -->` after `{MSTORE_ROW_TITLE}`:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="row mb-3">
-        <label class="col-form-label fw-semibold">{PHP.L.userfields_fieldinfo}:</label>
-        <!-- IF {MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER} -->
-        <div class="userfield">
-            <span class="userfield-title">{MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER_TITLE}:</span>
-            <span class="userfield-value">{MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER}</span>
-        </div>
-        <!-- ENDIF -->
-        <!-- IF {MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME} -->
-        <div class="userfield">
-            <span class="userfield-title">{MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME_TITLE}:</span>
-            <span class="userfield-value">{MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME}</span>
-        </div>
-        <!-- ENDIF -->
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Prefix: `MSTORE_ROW_OWNER_`.
+**Using a Loop (Automatic Output of All Fields)**:
+- After `{PAGE_OWNER_NAME}`, add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- BEGIN: USERFIELDS -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_FIELD_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_FIELD}</span>
+      </div>
+      <!-- END: USERFIELDS -->
+      <hr>
+      {PAGE_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs all fields automatically as a loop with title and value, plus a pre-formatted HTML block.
+- Prefix: `PAGE_OWNER_`.
 
-- **mstore.tpl (Product Page)**:
-  - After `{MSTORE_OWNER_NAME}`:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="owner-userfields">
-        <!-- IF {MSTORE_OWNER_USERFIELDS_CELL_NUMBER} -->
-        <div>{MSTORE_OWNER_USERFIELDS_CELL_NUMBER_TITLE}: {MSTORE_OWNER_USERFIELDS_CELL_NUMBER}</div>
-        <!-- ENDIF -->
-        <!-- IF {MSTORE_OWNER_USERFIELDS_COMPANY_NAME} -->
-        <div>{MSTORE_OWNER_USERFIELDS_COMPANY_NAME_TITLE}: {MSTORE_OWNER_USERFIELDS_COMPANY_NAME}</div>
-        <!-- ENDIF -->
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Prefix: `MSTORE_OWNER_`.
+**Individual Fields (Custom Styling)**:
+- After `{PAGE_OWNER_NAME}`, add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {PAGE_OWNER_USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{PAGE_OWNER_USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{PAGE_OWNER_USERFIELDS_CELL_NUMBER}" class="fw-semibold">{PAGE_OWNER_USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {PAGE_OWNER_USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{PAGE_OWNER_USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{PAGE_OWNER_USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+      <hr>
+      {PAGE_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs specific fields with custom styling, plus a pre-formatted HTML block.
+- Prefix: `PAGE_OWNER_`.
 
-- **page.tpl (Articles)**:
-  - After `{PAGE_OWNER_NAME}`:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="owner-userfields">
-        <!-- IF {PAGE_OWNER_USERFIELDS_CELL_NUMBER} -->
-        <div>{PAGE_OWNER_USERFIELDS_CELL_NUMBER_TITLE}: {PAGE_OWNER_USERFIELDS_CELL_NUMBER}</div>
-        <!-- ENDIF -->
-        <!-- IF {PAGE_OWNER_USERFIELDS_COMPANY_NAME} -->
-        <div>{PAGE_OWNER_USERFIELDS_COMPANY_NAME_TITLE}: {PAGE_OWNER_USERFIELDS_COMPANY_NAME}</div>
-        <!-- ENDIF -->
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Prefix: `PAGE_OWNER_`.
+#### mstore.index.tpl / mstore.list.tpl (Product Lists)
 
-- **forums.posts.tpl (Forum Posts)**:
-  - After `{FORUMS_POSTS_ROW_USER_NAME}` in the post block:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="author-userfields">
-        <!-- IF {FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER} -->
-        <div>{FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER_TITLE}: {FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER}</div>
-        <!-- ENDIF -->
-        <!-- IF {FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME} -->
-        <div>{FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME_TITLE}: {FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME}</div>
-        <!-- ENDIF -->
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Prefix: `FORUMS_POSTS_ROW_USER_`.
+**Using a Loop (Automatic Output of All Fields)**:
+- Inside `<!-- BEGIN: MSTORE_ROW -->` or `<!-- BEGIN: LIST_ROW -->` after `{MSTORE_ROW_TITLE}`, add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- BEGIN: USERFIELDS -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_FIELD_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_FIELD}</span>
+      </div>
+      <!-- END: USERFIELDS -->
+      <hr>
+      {MSTORE_ROW_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs all fields automatically as a loop with title and value, plus a pre-formatted HTML block.
+- Prefix: `MSTORE_ROW_OWNER_`.
+
+**Individual Fields (Custom Styling)**:
+- Inside `<!-- BEGIN: MSTORE_ROW -->` or `<!-- BEGIN: LIST_ROW -->` after `{MSTORE_ROW_TITLE}`, add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER}" class="fw-semibold">{MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+      <hr>
+      {MSTORE_ROW_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs specific fields with custom styling, plus a pre-formatted HTML block.
+- Prefix: `MSTORE_ROW_OWNER_`.
+
+#### mstore.tpl (Product Page)
+
+**Using a Loop (Automatic Output of All Fields)**:
+- After `{MSTORE_OWNER_NAME}`, add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- BEGIN: USERFIELDS -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_FIELD_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_FIELD}</span>
+      </div>
+      <!-- END: USERFIELDS -->
+      <hr>
+      {MSTORE_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs all fields automatically as a loop with title and value, plus a pre-formatted HTML block.
+- Prefix: `MSTORE_OWNER_`.
+
+**Individual Fields (Custom Styling)**:
+- After `{MSTORE_OWNER_NAME}`, add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {MSTORE_OWNER_USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{MSTORE_OWNER_USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{MSTORE_OWNER_USERFIELDS_CELL_NUMBER}" class="fw-semibold">{MSTORE_OWNER_USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {MSTORE_OWNER_USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{MSTORE_OWNER_USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{MSTORE_OWNER_USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+      <hr>
+      {MSTORE_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs specific fields with custom styling, plus a pre-formatted HTML block.
+- Prefix: `MSTORE_OWNER_`.
+
+#### forums.posts.tpl (Forum Posts)
+
+**Using a Loop (Automatic Output of All Fields)**:
+- After `{FORUMS_POSTS_ROW_USER_NAME}` in the post block, add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- BEGIN: USERFIELDS -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_FIELD_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_FIELD}</span>
+      </div>
+      <!-- END: USERFIELDS -->
+      <hr>
+      {FORUMS_POSTS_ROW_USER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs all fields automatically as a loop with title and value, plus a pre-formatted HTML block.
+- Prefix: `FORUMS_POSTS_ROW_USER_`.
+
+**Individual Fields (Custom Styling)**:
+- After `{FORUMS_POSTS_ROW_USER_NAME}` in the post block, add:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER}" class="fw-semibold">{FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+      <hr>
+      {FORUMS_POSTS_ROW_USER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Outputs specific fields with custom styling, plus a pre-formatted HTML block.
+- Prefix: `FORUMS_POSTS_ROW_USER_`.
 
 ### CSS Styling
 Add to your theme's CSS (e.g., `themes/yourtheme/yourtheme.css`):
@@ -298,93 +528,103 @@ Discuss the plugin, ask questions, or get help in the [dedicated forum thread](h
 ## License
 BSD License. Copyright (c) webitproff 2025.
 
-
 ---
 
-# 🇷🇺 Русский
-
+### 🇷🇺 Русский
 
 # Плагин Userfields для Cotonti 0.9.26
 
 ## Описание
 
-Плагин **Userfields** для CMS Cotonti позволяет создавать и управлять дополнительными пользовательскими полями (например, номер телефона, название компании, адрес) без изменения таблицы `cot_users`. Использует собственные таблицы `cot_userfield_types` (типы полей) и `cot_userfield_values` (значения полей), что разгружает `cot_users`, обеспечивая масштабируемость и удобство. Поля интегрируются в профили пользователей, админку и отображаются в шаблонах (список пользователей, статьи, форум, модуль mstore).
-Разгружаем таблицу БД с полями пользователей. Создание, редактирование, удаление пользовательских полей, типа номер телефона, название компании, адрес, не создавая экстраполя. Хранение значений в отдельной таблице, привязанной к ID пользователя.
-### Основные возможности
-- Создание, редактирование, удаление типов полей с уникальным кодом, названием и порядком сортировки через админ-панель.
+Плагин **Userfields** для CMS Cotonti позволяет создавать и управлять дополнительными пользовательскими полями (например, номер телефона, название компании, адрес) без изменения таблицы `cot_users`. Использует таблицы `cot_userfield_types` (типы полей) и `cot_userfield_values` (значения полей) для масштабируемости и удобства. Поля интегрируются в профили пользователей, админ-панель и шаблоны (список пользователей, статьи, форумы, модуль Multistore).
+
+![Плагин дополнительных полей для Cotonti CMF](https://raw.githubusercontent.com/webitproff/cot-userfields/main/User-fields-Plugin-for-Cotonti_3.webp)
+
+#### Основные возможности
+- Создание, редактирование и удаление типов полей с уникальными кодами, названиями и порядком сортировки через админ-панель.
 - Хранение значений в отдельной таблице, привязанной к ID пользователя.
 - Редактирование полей в профиле (`users.profile.tpl`) и админском редакторе (`users.edit.tpl`).
-- Вывод полей в списках пользователей (`users.tpl`), на странице профиля (`users.details.tpl`) и других шаблонах через теги Cotonti.
+- Вывод полей в списках пользователей (`users.tpl`), страницах профиля (`users.details.tpl`) и других шаблонах (`page.tpl`, `mstore.tpl`, `forums.posts.tpl`) через теги Cotonti.
+- Поддержка индивидуальных тегов (например, `{USERFIELDS_CELL_NUMBER}`), цикла для всех полей (`<!-- BEGIN: USERFIELDS -->`) и HTML-блока (`{USERFIELDS_ROWS_HTML}` или `{USERS_ROW_FIELD_ROWS_HTML}`).
 - Автоматическое сохранение значений при обновлении профиля или данных пользователя.
 - Сортировка полей по параметру `order_num`.
 - Тестовые поля (`cell_number`, `company_name`) для быстрого старта.
 - Удобная админ-панель для управления полями.
 
-## Требования
+### Требования
 - Cotonti CMS 0.9.26 или выше.
-- PHP 8.4+
+- PHP 8.4+.
 - Активный модуль `users`.
 - MySQL 8.0 с поддержкой InnoDB (для внешних ключей).
 
 ## Установка
 
 1. **Подготовка файлов**:
-   - Скачать исходный код с репозитория на [GitHub](https://github.com/webitproff/cot-userfields)
-   - Содержимое архива cot-userfields-main.zip, а именно папку `userfields` закачать в папку `plugins`
-   - Создайте папку `plugins/userfields` в корне сайта.
-
-
+   - Скачайте исходный код с [репозитория на GitHub](https://github.com/webitproff/cot-userfields).
+   - Распакуйте `cot-userfields-main.zip` и загрузите папку `userfields` в директорию `plugins` в корне Cotonti.
 
 2. **Установка через админ-панель**:
-   - Зайдите в админку -> Управление сайтом -> Расширения -> User Fields .
-   - Войдите в карточку плагина **Userfields** и нажмите **Установить**.
-   - Плагин создаст таблицы `cot_userfield_types` и `cot_userfield_values`, добавит тестовые поля: `cell_number` (Номер мобильного телефона, порядок 1), `company_name` (Название компании, порядок 2).
-   - Эти поля для примера, их можете сразу удалить, отредактировать или создать новые.
-   
-5. **Описание файлов плагина**
-     - `userfields.setup.php` (конфигурация).
-     - `userfields.install.sql` (таблицы и тестовые данные).
-     - `userfields.uninstall.sql` (удаление таблиц).
-     - `userfields.admin.php` (логика админ-панели).
-     - `userfields.admin.tpl` (шаблон админ-панели).
-     - `userfields.ru.lang.php` (русская локализация).
-     - `userfields.functions.php` (функции).
-     - `userfields.users.details.tags.php` (теги для страницы профиля).
-     - `userfields.users.profile.tags.php` (теги для редактирования профиля).
-     - `userfields.users.edit.tags.php` (теги для админского редактирования).
-     - `userfields.users.profile.update.done.php` (сохранение профиля).
-     - `userfields.users.edit.update.done.php` (сохранение в админке).
-     - `userfields.users.loop.php` (вывод в списке пользователей).
-     - `userfields.usertags.php` (интеграция с `usertags`).
+   - Войдите в админ-панель (`/admin.php`).
+   - Перейдите в **Администрирование > Расширения > User Fields**.
+   - Найдите плагин **Userfields** и нажмите **Установить**.
+   - Плагин создаёт таблицы `cot_userfield_types` и `cot_userfield_values`, добавляя тестовые поля: `cell_number` (Номер мобильного телефона, порядок 1) и `company_name` (Название компании, порядок 2).
+   - Эти поля — примеры; их можно удалить, отредактировать или создать новые.
 
-6. **Список файлов плагина и его структура:**
+3. **Список файлов плагина**:
+   - `userfields.setup.php` (конфигурация плагина).
+   - `userfields.install.sql` (создание таблиц и тестовых данных).
+   - `userfields.uninstall.sql` (удаление таблиц).
+   - `userfields.admin.php` (логика админ-панели).
+   - `userfields.admin.tpl` (шаблон админ-панели).
+   - `userfields.ru.lang.php` (русская локализация).
+   - `userfields.en.lang.php` (английская локализация).
+   - `userfields.functions.php` (основные функции).
+   - `userfields.users.details.tags.php` (теги для страницы профиля).
+   - `userfields.users.profile.tags.php` (теги для редактирования профиля).
+   - `userfields.users.edit.tags.php` (теги для админского редактирования).
+   - `userfields.users.profile.update.done.php` (сохранение профиля).
+   - `userfields.users.edit.update.done.php` (сохранение в админке).
+   - `userfields.users.loop.php` (вывод в списке пользователей).
+   - `userfields.usertags.php` (интеграция с `usertags`).
+
+### Структура файлов
+
 ```
 /userfields/
-└── inc/
-    ├── userfields.functions.php         # Основные функции 
+├── inc/
+│   └── userfields.functions.php         # Основные функции
 ├── lang/
 │   ├── userfields.ru.lang.php           # Русская локализация
-│   └── userfields.en.lang.php           # Английская локализация
+│   ├── userfields.en.lang.php           # Английская локализация
 ├── setup/
 │   ├── userfields.install.sql           # SQL для создания таблиц
 │   └── userfields.uninstall.sql         # SQL для удаления таблиц
 ├── tpl/
-│   ├── userfields.admin.tpl                   # Шаблон создания и управления полями в админке плагина
-├── userfields.admin.php                       # Основная логика управления полями в админке
-├── userfields.global.php                      # Подключение языковых файлов глобально
-├── userfields.setup.php                       # Конфигурация и настройка плагина
-├── userfields.users.details.tags.php          # выводим поля и теги для страницы публичного профиля в шаблоне users.details.tpl
-├── userfields.users.edit.tags.php             # выводим поля и теги для страницы редактирования профиля админом в шаблоне users.edit.tpl
-├── userfields.users.edit.update.done.php          # цепляемся за хук и выполняем сохранение настроек профиля, внесенных администратором
-├── userfields.users.loop.php                   #  выводим поля в списке пользователей в users.tpl внутри <!-- BEGIN: USERS_ROW --> и <!-- END: USERS_ROW -->
-├── userfields.users.profile.tags.php          # выводим поля и теги для страницы редактирования профиля пользователем в шаблоне users.profile.tpl 
-├── userfields.users.profile.update.done.php     # цепляемся за хук и выполняем сохранение настроек профиля, внесенных пользователем
-├── userfields.usertags.php                     # Теги для интеграции по типу cot_generate_usertags($data, 'PREFIX_')
+│   └── userfields.admin.tpl             # Шаблон для админ-панели
+├── userfields.admin.php                 # Логика управления полями
+├── userfields.global.php                # Подключение языковых файлов
+├── userfields.setup.php                 # Конфигурация плагина
+├── userfields.users.details.tags.php    # Теги для страницы профиля
+├── userfields.users.edit.tags.php       # Теги для админского редактирования
+├── userfields.users.edit.update.done.php # Сохранение изменений администратором
+├── userfields.users.loop.php            # Вывод полей в списке пользователей
+├── userfields.users.profile.tags.php     # Теги для редактирования профиля
+├── userfields.users.profile.update.done.php # Сохранение изменений пользователем
+└── userfields.usertags.php              # Теги для интеграции через cot_generate_usertags
 ```
-	 
+
+4. **Деинсталляция**:
+   - В админ-панели: **Администрирование > Расширения > Userfields > Деинсталлировать**.
+   - Выполняется `userfields.uninstall.sql`, удаляющий таблицы.
+   - Удалите папку `plugins/userfields` вручную.
+
+5. **Устранение неполадок**:
+   - **Плагин не отображается**: Проверьте наличие файлов в `plugins/userfields`.
+   - **Проблемы с базой данных**: Убедитесь, что пользователь MySQL имеет права на создание таблиц и внешние ключи.
+
 ## Управление полями в админ-панели
 
-Админ-панель: **Администрирование > Другие > Userfields**.
+Админ-панель: **Администрирование > Другие > Userfields** (требуются права администратора).
 
 ### Интерфейс
 - **Заголовок**: "Управление дополнительными полями пользователей".
@@ -394,194 +634,404 @@ BSD License. Copyright (c) webitproff 2025.
 ### Добавление типа поля
 - Нажмите **Добавить тип поля**.
 - Форма:
-  - **Код (code)**: Уникальный идентификатор (только латинские буквы, цифры, нижнее подчеркивание; макс. 50 символов). Используется в тегах (например, `cell_number` → `USERFIELDS_CELL_NUMBER`). Обязательное, уникальное.
+  - **Код (code)**: Уникальный идентификатор (латинские буквы, цифры, нижнее подчеркивание; макс. 50 символов). Используется в тегах (например, `cell_number` → `USERFIELDS_CELL_NUMBER`). Обязательное, уникальное.
   - **Название (title)**: Отображаемое имя (например, "Номер мобильного телефона"; макс. 100 символов). Обязательное.
-  - **Порядок сортировки (order_num)**: Целое число (1 — первый, 2 — второй). Порядок вывода (меньше — выше). Обязательное, по умолчанию 0.
-- Нажмите **Сохранить**. Ошибки (дубликат кода, пустые поля) отобразятся.
+  - **Порядок сортировки (order_num)**: Целое число (1 — первый, 2 — второй). Определяет порядок вывода (меньше — выше). Обязательное, по умолчанию 0.
+- Нажмите **Сохранить**. Ошибки (дубликат кода, пустые поля) будут отображены.
 
 ### Редактирование типа поля
-- Нажмите **Редактировать**.
+- Нажмите **Редактировать** рядом с полем.
 - Измените код, название или порядок (код должен быть уникальным).
 - Нажмите **Сохранить**. Обновите теги в шаблонах, если код изменился.
 
 ### Удаление типа поля
 - Нажмите **Удалить** и подтвердите.
-- Удаляет тип и связанные значения (`ON DELETE CASCADE`).
+- Удаляет тип поля и связанные значения в `cot_userfield_values` (через `ON DELETE CASCADE`).
 
-### Поля типов
+### Определение полей
 - **id**: Автоматический уникальный ID.
-- **code**: Ключ для тегов (`USERFIELDS_CODE` — значение, `USERFIELDS_CODE_TITLE` — название).
-- **title**: Название для форм и списков.
+- **code**: Идентификатор для тегов (`USERFIELDS_CODE` — значение, `USERFIELDS_CODE_TITLE` — название).
+- **title**: Название для форм и вывода.
 - **order_num**: Порядок вывода.
 
 ### Заполнение полей
-- **Пользователями**: В профиле (`users.profile.tpl`) — таблица с названием и input. Сохраняется при обновлении профиля.
-- **Администраторами**: В редакторе (`users.edit.tpl`) — аналогичная таблица.
+- **Пользователями**: В профиле (`users.profile.tpl`) поля отображаются как таблица с названием и полем ввода. Сохраняются при обновлении профиля.
+- **Администраторами**: В редакторе (`users.edit.tpl`) — аналогичная таблица для любого пользователя. Сохраняется при обновлении.
 - **Формат**: Текст (тип TEXT, без ограничения длины). Поля необязательные.
 
 ## Интеграция в шаблоны
 
-Плагин использует теги для модуля `users` и `cot_generate_usertags` для других модулей (`mstore`, `page`, `forums`). 
-Теги используют код поля в верхнем регистре (например, `cell_number` → `USERFIELDS_CELL_NUMBER`). 
-Все теги оборачиваются в проверку активности плагина: `<!-- IF {PHP|cot_plugin_active('userfields')} -->`.
+Плагин предоставляет теги для модуля `users` и через `cot_generate_usertags` для других модулей (`mstore`, `page`, `forums`). Теги используют код поля в верхнем регистре (например, `cell_number` → `USERFIELDS_CELL_NUMBER`). Все теги оборачиваются в `<!-- IF {PHP|cot_plugin_active('userfields')} -->` для совместимости.
 
 ### 1. Шаблоны модуля `users`
 
-- **users.profile.tpl (редактирование профиля)**:
-  - Внутри `<form>` (например, после `{USERS_PROFILE_COUNTRY}`) добавьте или только так, что бы вывести все поля:
-    ```html
-<!-- IF {PHP|cot_plugin_active('userfields')} -->
-<!-- BEGIN: USERFIELDS -->
-<div>
-  <label>{USERFIELDS_FIELD_TITLE}</label>
-  {USERFIELDS_FIELD}
-</div>
-<!-- END: USERFIELDS -->
-</div>
-<!-- ENDIF -->
-    ```
-или только так, что бы воводить каждое поле индивидуально и кастомизировать по своему вкусу
-    ```html
-<!-- IF {PHP|cot_plugin_active('userfields')} -->
-<div class="row mb-3">
-    <!-- IF {USERFIELDS_CELL_NUMBER} -->
-    <div class="userfield">
-        <label class="userfield-title">{USERFIELDS_CELL_NUMBER_TITLE}:</label>
-        <div class="userfield-value">{USERFIELDS_CELL_NUMBER}</div>
-    </div>
-    <!-- ENDIF -->
-    <!-- IF {USERFIELDS_TELEGRAM} -->
-    <div class="userfield">
-        <label class="userfield-title">{USERFIELDS_TELEGRAM_TITLE}:</label>
-        <div class="userfield-value">{USERFIELDS_TELEGRAM}</div>
-    </div>
-    <!-- ENDIF -->
-</div>
-<!-- ENDIF -->
-    ```
+#### users.profile.tpl (Редактирование профиля)
 
- 
-  - Выводит таблицу: название поля + input.
+**Циклом (автоматический вывод всех полей)**:
+- Внутри `<form>` (например, после `{USERS_PROFILE_COUNTRY}`) добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="userfields-block">
+      <!-- BEGIN: USERFIELDS -->
+      <div>
+          <label>{USERFIELDS_FIELD_TITLE}</label>
+          {USERFIELDS_FIELD}
+      </div>
+      <!-- END: USERFIELDS -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит все поля автоматически в виде цикла с названием и полем ввода.
 
-- **users.edit.tpl (админское редактирование)**:
-  - Внутри `<form>` (например, после `{USERS_EDIT_COUNTRY}`) добавьте:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="userfields-block">
-        {USERFIELDS_FORM}
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Выводит таблицу, как в профиле.
+**Индивидуально (кастомная стилизация полей)**:
+- Внутри `<form>` (например, после `{USERS_PROFILE_COUNTRY}`) добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <label class="userfield-title text-primary">{USERFIELDS_CELL_NUMBER_TITLE}:</label>
+          <div class="userfield-value">{USERFIELDS_CELL_NUMBER}</div>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield text-danger">
+          <label class="userfield-title">{USERFIELDS_COMPANY_NAME_TITLE}:</label>
+          <div class="userfield-value">{USERFIELDS_COMPANY_NAME}</div>
+      </div>
+      <!-- ENDIF -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит конкретные поля с индивидуальной стилизацией.
 
-- **users.details.tpl (страница профиля)**:
-  - Например, после тегов `{USERS_DETAILS_COUNTRY_FLAG} {USERS_DETAILS_COUNTRY}` добавьте:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="userfields-details">
-        <h3>Дополнительные поля</h3>
-        {USERFIELDS_FIELDS}
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Выводит `<dl>`: `<dt>Название</dt> <dd>Значение</dd>` (только заполненные).
+#### users.edit.tpl (Админское редактирование)
 
-- **users.tpl (список пользователей)**:
-  - Внутри `<!-- BEGIN: USERS_ROW -->` (после `{USERS_ROW_NAME}`) добавьте:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="user-fields">
-        {USERS_ROW_FIELD_ROWS_HTML}
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Выводит `<div>`: название + значение.
+**Циклом (автоматический вывод всех полей)**:
+- Внутри `<form>` (например, после `{USERS_EDIT_COUNTRY}`) добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="userfields-block">
+      <!-- BEGIN: USERFIELDS -->
+      <div>
+          <label>{USERFIELDS_FIELD_TITLE}</label>
+          {USERFIELDS_FIELD}
+      </div>
+      <!-- END: USERFIELDS -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит все поля автоматически в виде цикла с названием и полем ввода.
+
+**Индивидуально (кастомная стилизация полей)**:
+- Внутри `<form>` (например, после `{USERS_EDIT_COUNTRY}`) добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <label class="userfield-title text-primary">{USERFIELDS_CELL_NUMBER_TITLE}:</label>
+          <div class="userfield-value">{USERFIELDS_CELL_NUMBER}</div>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield text-danger">
+          <label class="userfield-title">{USERFIELDS_COMPANY_NAME_TITLE}:</label>
+          <div class="userfield-value">{USERFIELDS_COMPANY_NAME}</div>
+      </div>
+      <!-- ENDIF -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит конкретные поля с индивидуальной стилизацией.
+
+#### users.details.tpl (Страница профиля)
+
+**Циклом (автоматический вывод всех полей)**:
+- После `{USERS_DETAILS_COUNTRY_FLAG} {USERS_DETAILS_COUNTRY}` добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="userfields-details">
+      <h3>Дополнительные поля</h3>
+      <!-- BEGIN: USERFIELDS_DETAILS -->
+      <div class="userfield">
+          <label class="userfield-title text-success">{USERFIELDS_FIELD_TITLE}:</label>
+          <div class="userfield-value">{USERFIELDS_FIELD}</div>
+      </div>
+      <!-- END: USERFIELDS_DETAILS -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит все поля автоматически в виде цикла с названием и значением.
+
+**Индивидуально (кастомная стилизация полей)**:
+- После `{USERS_DETAILS_COUNTRY_FLAG} {USERS_DETAILS_COUNTRY}` добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{USERFIELDS_CELL_NUMBER}" class="fw-semibold">{USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит конкретные поля с индивидуальной стилизацией, например, кликабельный номер телефона.
+
+#### users.tpl (Список пользователей)
+
+**Циклом (автоматический вывод всех полей)**:
+- Внутри `<!-- BEGIN: USERS_ROW -->` (например, после `{USERS_ROW_NAME}`) добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="user-fields">
+      <!-- BEGIN: USERFIELDS -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_FIELD_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_FIELD}</span>
+      </div>
+      <!-- END: USERFIELDS -->
+      <hr>
+      {USERS_ROW_FIELD_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит все поля автоматически в виде цикла с названием и значением, плюс предформатированный HTML-блок.
+
+**Индивидуально (кастомная стилизация полей)**:
+- Внутри `<!-- BEGIN: USERS_ROW -->` (например, после `{USERS_ROW_NAME}`) добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="user-fields">
+      <!-- IF {USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{USERFIELDS_CELL_NUMBER}" class="fw-semibold">{USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+      <hr>
+      {USERS_ROW_FIELD_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит конкретные поля с индивидуальной стилизацией, плюс предформатированный HTML-блок.
 
 ### 2. Другие модули (через usertags)
-Используйте за пример существующие примеры использования `cot_generate_usertags($data, 'PREFIX_')` в движке, для создания своих тегов типа `{PREFIX_USERFIELDS_CODE}` и `{PREFIX_USERFIELDS_CODE_TITLE}`, 
-где `PREFIX_` это преффикс вашего тега соответствующего шаблона вашего модуля или плагина, например:
 
-это `LIST_ROW_OWNER_` для списков страниц модуля `page` 
-узнать больше в page.list.php `$t->assign(cot_generate_usertags($pag, 'LIST_ROW_OWNER_'));`
+Плагин поддерживает интеграцию с другими модулями через `cot_generate_usertags($data, 'PREFIX_')`, предоставляя теги `{PREFIX_USERFIELDS_CODE}`, `{PREFIX_USERFIELDS_CODE_TITLE}` и `{PREFIX_USERFIELDS_ROWS_HTML}`.
 
-или это `PAGE_OWNER_` для полной страницы модуля `page` 
-(узнать больше в page.main.php `$t->assign(cot_generate_usertags($pag, 'PAGE_OWNER_'));`).
+#### page.tpl (Страница статьи)
 
-Вот пример для реализации в сборке [Multistore](https://github.com/webitproff/cot-multistore)
+**Циклом (автоматический вывод всех полей)**:
+- После `{PAGE_OWNER_NAME}` добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- BEGIN: USERFIELDS -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_FIELD_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_FIELD}</span>
+      </div>
+      <!-- END: USERFIELDS -->
+      <hr>
+      {PAGE_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит все поля автоматически в виде цикла с названием и значением, плюс предформатированный HTML-блок.
+- Префикс: `PAGE_OWNER_`.
 
-- **mstore.index.tpl / mstore.list.tpl (списки товаров)**:
-  - Внутри `<!-- BEGIN: MSTORE_ROW -->` или `<!-- BEGIN: LIST_ROW -->` после `{MSTORE_ROW_TITLE}`:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="row mb-3">
-        <label class="col-form-label fw-semibold">{PHP.L.userfields_fieldinfo}:</label>
-        <!-- IF {MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER} -->
-        <div class="userfield">
-            <span class="userfield-title">{MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER_TITLE}:</span>
-            <span class="userfield-value">{MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER}</span>
-        </div>
-        <!-- ENDIF -->
-        <!-- IF {MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME} -->
-        <div class="userfield">
-            <span class="userfield-title">{MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME_TITLE}:</span>
-            <span class="userfield-value">{MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME}</span>
-        </div>
-        <!-- ENDIF -->
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Префикс: `MSTORE_ROW_OWNER_`.
+**Индивидуально (кастомная стилизация полей)**:
+- После `{PAGE_OWNER_NAME}` добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {PAGE_OWNER_USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{PAGE_OWNER_USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{PAGE_OWNER_USERFIELDS_CELL_NUMBER}" class="fw-semibold">{PAGE_OWNER_USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {PAGE_OWNER_USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{PAGE_OWNER_USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{PAGE_OWNER_USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+      <hr>
+      {PAGE_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит конкретные поля с индивидуальной стилизацией, плюс предформатированный HTML-блок.
+- Префикс: `PAGE_OWNER_`.
 
-- **mstore.tpl (страница товара)**:
-  - После `{MSTORE_OWNER_NAME}`:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="owner-userfields">
-        <!-- IF {MSTORE_OWNER_USERFIELDS_CELL_NUMBER} -->
-        <div>{MSTORE_OWNER_USERFIELDS_CELL_NUMBER_TITLE}: {MSTORE_OWNER_USERFIELDS_CELL_NUMBER}</div>
-        <!-- ENDIF -->
-        <!-- IF {MSTORE_OWNER_USERFIELDS_COMPANY_NAME} -->
-        <div>{MSTORE_OWNER_USERFIELDS_COMPANY_NAME_TITLE}: {MSTORE_OWNER_USERFIELDS_COMPANY_NAME}</div>
-        <!-- ENDIF -->
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Префикс: `MSTORE_OWNER_`.
-### Модуль page (статьи)
-- **page.tpl**:
-  - После `{PAGE_OWNER_NAME}`:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="owner-userfields">
-        <!-- IF {PAGE_OWNER_USERFIELDS_CELL_NUMBER} -->
-        <div>{PAGE_OWNER_USERFIELDS_CELL_NUMBER_TITLE}: {PAGE_OWNER_USERFIELDS_CELL_NUMBER}</div>
-        <!-- ENDIF -->
-        <!-- IF {PAGE_OWNER_USERFIELDS_COMPANY_NAME} -->
-        <div>{PAGE_OWNER_USERFIELDS_COMPANY_NAME_TITLE}: {PAGE_OWNER_USERFIELDS_COMPANY_NAME}</div>
-        <!-- ENDIF -->
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Префикс: `PAGE_OWNER_`.
-### Модуль forums, шаблон посты форума
-- **forums.posts.tpl**:
-  - После `{FORUMS_POSTS_ROW_USER_NAME}` в блоке поста:
-    ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="author-userfields">
-        <!-- IF {FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER} -->
-        <div>{FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER_TITLE}: {FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER}</div>
-        <!-- ENDIF -->
-        <!-- IF {FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME} -->
-        <div>{FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME_TITLE}: {FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME}</div>
-        <!-- ENDIF -->
-    </div>
-    <!-- ENDIF -->
-    ```
-  - Префикс: `FORUMS_POSTS_ROW_USER_`.
+#### mstore.index.tpl / mstore.list.tpl (Списки товаров)
+
+**Циклом (автоматический вывод всех полей)**:
+- Внутри `<!-- BEGIN: MSTORE_ROW -->` или `<!-- BEGIN: LIST_ROW -->` после `{MSTORE_ROW_TITLE}` добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- BEGIN: USERFIELDS -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_FIELD_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_FIELD}</span>
+      </div>
+      <!-- END: USERFIELDS -->
+      <hr>
+      {MSTORE_ROW_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит все поля автоматически в виде цикла с названием и значением, плюс предформатированный HTML-блок.
+- Префикс: `MSTORE_ROW_OWNER_`.
+
+**Индивидуально (кастомная стилизация полей)**:
+- Внутри `<!-- BEGIN: MSTORE_ROW -->` или `<!-- BEGIN: LIST_ROW -->` после `{MSTORE_ROW_TITLE}` добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER}" class="fw-semibold">{MSTORE_ROW_OWNER_USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{MSTORE_ROW_OWNER_USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+      <hr>
+      {MSTORE_ROW_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит конкретные поля с индивидуальной стилизацией, плюс предформатированный HTML-блок.
+- Префикс: `MSTORE_ROW_OWNER_`.
+
+#### mstore.tpl (Страница товара)
+
+**Циклом (автоматический вывод всех полей)**:
+- После `{MSTORE_OWNER_NAME}` добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- BEGIN: USERFIELDS -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_FIELD_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_FIELD}</span>
+      </div>
+      <!-- END: USERFIELDS -->
+      <hr>
+      {MSTORE_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит все поля автоматически в виде цикла с названием и значением, плюс предформатированный HTML-блок.
+- Префикс: `MSTORE_OWNER_`.
+
+**Индивидуально (кастомная стилизация полей)**:
+- После `{MSTORE_OWNER_NAME}` добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {MSTORE_OWNER_USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{MSTORE_OWNER_USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{MSTORE_OWNER_USERFIELDS_CELL_NUMBER}" class="fw-semibold">{MSTORE_OWNER_USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {MSTORE_OWNER_USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{MSTORE_OWNER_USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{MSTORE_OWNER_USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+      <hr>
+      {MSTORE_OWNER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит конкретные поля с индивидуальной стилизацией, плюс предформатированный HTML-блок.
+- Префикс: `MSTORE_OWNER_`.
+
+#### forums.posts.tpl (Посты форума)
+
+**Циклом (автоматический вывод всех полей)**:
+- После `{FORUMS_POSTS_ROW_USER_NAME}` в блоке поста добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- BEGIN: USERFIELDS -->
+      <div class="userfield">
+          <span class="userfield-title">{USERFIELDS_FIELD_TITLE}:</span>
+          <span class="userfield-value">{USERFIELDS_FIELD}</span>
+      </div>
+      <!-- END: USERFIELDS -->
+      <hr>
+      {FORUMS_POSTS_ROW_USER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит все поля автоматически в виде цикла с названием и значением, плюс предформатированный HTML-блок.
+- Префикс: `FORUMS_POSTS_ROW_USER_`.
+
+**Индивидуально (кастомная стилизация полей)**:
+- После `{FORUMS_POSTS_ROW_USER_NAME}` в блоке поста добавьте:
+  ```html
+  <!-- IF {PHP|cot_plugin_active('userfields')} -->
+  <div class="row mb-3">
+      <!-- IF {FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER} -->
+      <div class="userfield">
+          <span class="userfield-title">{FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER_TITLE}:</span>
+          <span class="userfield-value">
+              <a href="tel:{FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER}" class="fw-semibold">{FORUMS_POSTS_ROW_USER_USERFIELDS_CELL_NUMBER}</a>
+          </span>
+      </div>
+      <!-- ENDIF -->
+      <!-- IF {FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME} -->
+      <div class="userfield">
+          <span class="userfield-title">{FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME_TITLE}:</span>
+          <span class="userfield-value">{FORUMS_POSTS_ROW_USER_USERFIELDS_COMPANY_NAME}</span>
+      </div>
+      <!-- ENDIF -->
+      <hr>
+      {FORUMS_POSTS_ROW_USER_USERFIELDS_ROWS_HTML}
+  </div>
+  <!-- ENDIF -->
+  ```
+- Выводит конкретные поля с индивидуальной стилизацией, плюс предформатированный HTML-блок.
+- Префикс: `FORUMS_POSTS_ROW_USER_`.
 
 ### Стили CSS
-В CSS темы (например, `themes/yourtheme/yourtheme.css`):
+Добавьте в CSS вашей темы (например, `themes/yourtheme/yourtheme.css`):
 ```css
 .userfields-block, .userfields-details, .user-fields, .owner-userfields, .author-userfields {
     margin: 20px 0;
@@ -605,8 +1055,7 @@ BSD License. Copyright (c) webitproff 2025.
 ```
 
 ## Поддержка
-Обсуждение плагина, вопросы и помощь в [отдельной теме на форуме разработчика](https://abuyfile.com/ru/forums/cotonti/custom/plugs/topic155)
-
+Обсуждение плагина, вопросы и помощь в [отдельной теме на форуме](https://abuyfile.com/ru/forums/cotonti/custom/plugs/topic155).
 
 ## Лицензия
 BSD License. Copyright (c) webitproff 2025.
