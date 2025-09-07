@@ -143,6 +143,15 @@ The plugin provides tags for the `users` module and via `cot_generate_usertags` 
     </div>
     <!-- ENDIF -->
     ```
+
+    ```html
+    <!-- IF {PHP|cot_plugin_active('userfields')} -->
+    <div class="userfields-block">
+        {USERFIELDS_FORM}
+    </div>
+    <!-- ENDIF -->
+    ```
+
   - Outputs a table with field titles and input fields.
 
 - **users.edit.tpl (Admin User Editing)**:
@@ -419,14 +428,39 @@ BSD License. Copyright (c) webitproff 2025.
 ### 1. Шаблоны модуля `users`
 
 - **users.profile.tpl (редактирование профиля)**:
-  - Внутри `<form>` (например, после `{USERS_PROFILE_COUNTRY}`) добавьте:
+  - Внутри `<form>` (например, после `{USERS_PROFILE_COUNTRY}`) добавьте или только так, что бы вывести все поля:
     ```html
-    <!-- IF {PHP|cot_plugin_active('userfields')} -->
-    <div class="userfields-block">
-        {USERFIELDS_FORM}
+<!-- IF {PHP|cot_plugin_active('userfields')} -->
+<!-- BEGIN: USERFIELDS -->
+<div>
+  <label>{USERFIELDS_FIELD_TITLE}</label>
+  {USERFIELDS_FIELD}
+</div>
+<!-- END: USERFIELDS -->
+</div>
+<!-- ENDIF -->
+    ```
+или только так, что бы воводить каждое поле индивидуально и кастомизировать по своему вкусу
+    ```html
+<!-- IF {PHP|cot_plugin_active('userfields')} -->
+<div class="row mb-3">
+    <!-- IF {USERFIELDS_CELL_NUMBER} -->
+    <div class="userfield">
+        <label class="userfield-title">{USERFIELDS_CELL_NUMBER_TITLE}:</label>
+        <div class="userfield-value">{USERFIELDS_CELL_NUMBER}</div>
     </div>
     <!-- ENDIF -->
+    <!-- IF {USERFIELDS_TELEGRAM} -->
+    <div class="userfield">
+        <label class="userfield-title">{USERFIELDS_TELEGRAM_TITLE}:</label>
+        <div class="userfield-value">{USERFIELDS_TELEGRAM}</div>
+    </div>
+    <!-- ENDIF -->
+</div>
+<!-- ENDIF -->
     ```
+
+ 
   - Выводит таблицу: название поля + input.
 
 - **users.edit.tpl (админское редактирование)**:
