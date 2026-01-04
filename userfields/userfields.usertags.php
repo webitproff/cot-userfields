@@ -17,9 +17,14 @@
 
 defined('COT_CODE') or die('Wrong URL.');
 
-require_once cot_incfile('userfields', 'plug', 'functions');
+require_once cot_incfile('userfields', 'plug');
 
 global $t;
+
+if (!isset($t) || !$t instanceof XTemplate) {
+    // Если $t не определён или не является объектом шаблона, просто выходим
+    return;
+}
 
 if (is_array($user_data) && !empty($user_data)) {
     // Check possible keys for user_id
