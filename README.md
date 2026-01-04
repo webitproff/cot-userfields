@@ -559,7 +559,8 @@ Discuss the plugin, ask questions, or get help in the [dedicated forum thread](h
 ## License
 BSD License. Copyright (c) webitproff 2025.
 
-
+2026, 4Th, Jan
+fixed an error when viewing the comments administration page.
 ---
 
 
