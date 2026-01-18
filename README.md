@@ -6,6 +6,15 @@
 
 The **Userfields** plugin for Cotonti CMS enables the creation and management of custom user fields (e.g., phone number, company name, address, Telegram) without modifying the `cot_users` table. It uses dedicated tables `cot_userfield_types` (field types) and `cot_userfield_values` (field values) for scalability and ease of use. Fields seamlessly integrate into user profiles, admin panels, and templates across various modules (user lists, articles, forums, Multistore module).
 
+
+[![Cotonti Compatibility](https://img.shields.io/badge/Cotonti_Siena-0.9.26-orange.svg)](https://github.com/Cotonti/Cotonti)
+[![PHP](https://img.shields.io/badge/PHP-8.4-purple.svg)](https://www.php.net/releases/8_4_0.php)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-blue.svg)](https://www.mysql.com/)
+[![Bootstrap v5.3.8](https://img.shields.io/badge/Bootstrap-v5.3.8-blueviolet.svg)](https://getbootstrap.com/)
+
+
+
+
 ![Custom Userfields Plugin for Cotonti CMF](https://raw.githubusercontent.com/webitproff/cot-userfields/main/User-fields-Plugin-for-Cotonti_3.webp)
 
 #### Key Features
