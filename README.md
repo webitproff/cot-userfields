@@ -1,6 +1,6 @@
 
 
-# Userfields Plugin for Cotonti 0.9.26
+# Userfields Plugin for Cotonti 0.9.26 ( DEPRECATED !!! DO NOT INSTALL / ONLY READ)
 
 ## Overview
 
