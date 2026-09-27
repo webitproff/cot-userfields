@@ -1,6 +1,13 @@
 
 
-# Userfields Plugin for Cotonti 0.9.26 ( DEPRECATED !!! DO NOT INSTALL / ONLY READ)
+# Userfields Plugin for Cotonti 0.9.26
+> ⚠️ **WARNING!**
+>
+> This extension has been declared **deprecated** and may break other plugins or modules.
+>
+> **Do not install it on a production site.**
+>
+> To use multiple additional fields for the users module, use either the USERS module’s own fields or the [Extrafields Users Custom](https://github.com/webitproff/xtradbrowusers-cotonti) plugin.
 
 ## Overview
 
@@ -578,7 +585,12 @@ fixed an error when viewing the comments administration page.
 ### 🇷🇺 Русский
 
 # Плагин Userfields для Cotonti 0.9.26
-
+> ⚠️ **ВНИМАНИЕ!**
+>
+> Расширение объявлено как **устаревшее** и такое, что может нарушить работу других плагинов или модулей.
+> **Не использовать для установки на рабочий сайт.**
+>
+> Для использования множественных дополнительных полей для модуля пользователей использовать либо собственные поля модуля USERS, либо плагин [Extrafields Users Custom](https://github.com/webitproff/xtradbrowusers-cotonti).
 ## Описание
 
 Плагин **Userfields** для CMS Cotonti позволяет создавать и управлять дополнительными пользовательскими полями (например, номер телефона, название компании, адрес, телеграм) без изменения таблицы `cot_users`. Использует таблицы `cot_userfield_types` (типы полей) и `cot_userfield_values` (значения полей) для масштабируемости и удобства. Поля интегрируются в профили пользователей, админ-панель и шаблоны (список пользователей, статьи, форумы, модуль Multistore).
